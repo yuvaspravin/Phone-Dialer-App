@@ -2,16 +2,12 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { useSelector, useDispatch } from 'react-redux';
-import { enableDialScreen,enableDialPad } from "../redux/action";
+import { useSelector, useDispatch } from "react-redux";
+import { enableDialScreen, enableDialPad } from "../redux/action";
 
-const DialScreen = ({navigation}) => {
-  
-
-  
+const DialScreen = ({ navigation }) => {
   const [callTime, setCallTime] = useState(0);
-  const isDialScreenEnable = useSelector(state => state?.isContactNumber)
-  
+  const isDialScreenEnable = useSelector((state) => state?.isContactNumber);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,22 +22,16 @@ const DialScreen = ({navigation}) => {
     const secs = seconds % 60;
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
-  const handleCallCut=()=>{
+  const handleCallCut = () => {
     // navigation.navigate('dialPad')
-    
-  }
+  };
 
   return (
     <View style={styles.container}>
-    
-     
       <Text style={styles.phoneNumber}>{isDialScreenEnable}</Text>
       <Text style={styles.callTime}>{formatTime(callTime)}</Text>
- <View
-        
-        style={styles.avatar}
-      />
-     
+      <View style={styles.avatar} />
+
       <View style={styles.controls}>
         <TouchableOpacity style={styles.controlButton}>
           <Ionicons name="pause-circle" size={30} color="#000" />
@@ -64,11 +54,11 @@ const DialScreen = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      
       <TouchableOpacity
         style={styles.endCallButton}
-       
-        onPress={() => {navigation.navigate('dialPad')}}
+        onPress={() => {
+          navigation.navigate("TabNav", { screen: "recents" });
+        }}
       >
         <Ionicons name="call" size={30} color="white" />
       </TouchableOpacity>
@@ -83,7 +73,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#f5f5f5",
   },
-  avatar: { width: 100, height: 100, borderRadius: 50, marginBottom: 10,backgroundColor:"#ddd" },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+    backgroundColor: "#ddd",
+  },
   phoneNumber: { fontSize: 22, color: "#000", marginBottom: 5 },
   callTime: { fontSize: 18, color: "#000", marginBottom: 30 },
   controls: {
